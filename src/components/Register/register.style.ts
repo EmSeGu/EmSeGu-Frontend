@@ -14,6 +14,19 @@ export const Input = styled.input`
   border-radius: 5px;
 `;
 
+export const Input2 = styled.input`
+  /* box-sizing: border-box; */
+
+  width: 460px;
+  height: 50px;
+  left: 526px;
+  top: 313px;
+
+  background: #ffffff;
+  border: 2px solid #cecece;
+  border-radius: 5px;
+`;
+
 export const Container = styled.div`
   height: 100%;
 
@@ -35,6 +48,20 @@ export const Form = styled.form`
 
   div {
     margin-bottom: 30px;
+  }
+
+  .flex {
+    display: flex;
+    margin: 0;
+
+    p {
+      width: 100px;
+      text-decoration: underline;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 

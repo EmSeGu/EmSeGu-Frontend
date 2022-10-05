@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Input,
+  Input2,
   Container,
   Form,
   Label,
@@ -46,7 +47,14 @@ const RegisterForm = () => {
       <Form onSubmit={requestRegisterf}>
         <div>
           <Label htmlFor="">이메일</Label>
-          <Input type="text" onChange={changeId} />
+          <div className="flex">
+            <Input type="text" onChange={changeId} />
+            <p>인증</p>
+          </div>
+        </div>
+        <div>
+          <Label htmlFor="">인증코드</Label>
+          <Input2 type="text" onChange={changeId} />
         </div>
         <div>
           <Label htmlFor="">비밀번호</Label>
