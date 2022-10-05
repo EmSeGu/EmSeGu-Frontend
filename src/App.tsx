@@ -1,15 +1,20 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/common/Header";
+import Layout from "./components/Layout/Layout";
 import LoginComponent from "./components/Login";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route index element={<div>Main</div>} />
-        <Route path="/login" element={<LoginComponent />} />
-        <Route path="*" element={<div>Not Found</div>} />
-      </Routes>
+      <Header />
+      <Layout>
+        <Routes>
+          <Route index element={<div>Main</div>} />
+          <Route path="/login" element={<LoginComponent />} />
+          <Route path="*" element={<div>Not Found</div>} />
+        </Routes>
+      </Layout>
     </BrowserRouter>
   );
 };
