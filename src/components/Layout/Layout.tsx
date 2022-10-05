@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const LayoutStyle = styled.div`
   margin-top: 83px;
+  height: 100%;
 `;
 
 const Layout = ({ children }) => {
