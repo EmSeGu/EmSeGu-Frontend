@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 
 import styled from "styled-components";
+import StockApi from "../../../../api/stock/Stock.api";
 
 const List = styled.div`
   display: flex;
@@ -25,12 +26,21 @@ const Next = styled.div`
 `;
 
 const CardList = () => {
+  const [list, setList] = useState([]);
+  const get = async () => {
+    const value = await StockApi.myStock();
+    setList(value);
+  };
+
+  useEffect(() => {
+    get();
+  }, []);
   return (
     <List>
-      <Card />
-      <Card />
-      <Card />
-      <Next />
+      {list.map((v) => (
+        <Card v={v} />
+      ))}
+      <Next></Next>
     </List>
   );
 };

@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const CustomAxios = axios.create({
-  baseURL: "http://172.20.10.8:8082/",
-  headers: {},
+  baseURL: "http://192.168.183.31:8082/",
+  headers: {
+    Authorization: localStorage.getItem("accessToken"),
+  },
 });
 
 export default CustomAxios;
