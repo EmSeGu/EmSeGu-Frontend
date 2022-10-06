@@ -4,8 +4,9 @@ import { Window } from "./window";
 
 export const PopUp = ({ state, closePopUp }) => {
   return (
-    <S.BackGround onClick={() => closePopUp()}>
+    <S.Layout>
       <Window state={state} />
-    </S.BackGround>
+      <S.Background onClick={() => closePopUp()} />
+    </S.Layout>
   );
 };
