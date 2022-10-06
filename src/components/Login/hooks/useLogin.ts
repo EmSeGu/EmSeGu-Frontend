@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import AuthApi from "../../../api/Auth/Auth.api";
 
 const useLogin = () => {
   const idRef = useRef<HTMLInputElement>();
@@ -6,7 +7,7 @@ const useLogin = () => {
 
   const loginRequest = (e: any) => {
     e.preventDefualt();
-    console.log(idRef.current.value, pwRef.current.value);
+    AuthApi.login(idRef.current.value, pwRef.current.value);
   };
 
   return { idRef, pwRef, loginRequest };
