@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import StockApi from "../../../api/stock/Stock.api";
 import { PopUp } from "../../Popup";
 import * as S from "./stock.style";
 
@@ -11,6 +12,10 @@ export const StockInfo = () => {
       setClickedNav((cl) => !cl);
     }
   };
+
+  useEffect(() => {
+    StockApi.getStockList();
+  }, []);
 
   return (
     <S.StockLayout>

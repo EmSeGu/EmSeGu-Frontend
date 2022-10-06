@@ -6,16 +6,27 @@ import Layout from "./components/Layout/Layout";
 import LoginComponent from "./components/Login";
 import MainPage from "./pages/main/MainPage";
 
+import { useSelector } from "react-redux";
+
 const App = () => {
+  const { login } = useSelector((state: any) => state.userReducer);
   return (
     <BrowserRouter>
       <Header />
       <Layout>
         <Routes>
-          <Route index element={<MainPage />} />
-          <Route path="/login" element={<LoginComponent />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="*" element={<div>Not Found</div>} />
+          {login ? (
+            <>
+              <Route index element={<MainPage />} />
+              <Route path="*" element={<div>Not Found</div>} />
+            </>
+          ) : (
+            <>
+              <Route path="/login" element={<LoginComponent />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="*" element={<LoginComponent />} />
+            </>
+          )}
         </Routes>
       </Layout>
     </BrowserRouter>

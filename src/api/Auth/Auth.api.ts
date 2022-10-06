@@ -16,21 +16,37 @@ class Auth {
       }
     }
   }
+  public async citationEmail(citation, id) {
+    try {
+      const { data } = await CustomAxios.head(
+        `/email?email=${id}&authKey=${citation}`
+      );
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
   public async register(id: string, pw: string) {
-    const value = await CustomAxios.post("/signup", {
+    const value = await CustomAxios.post("/auth/signup", {
       email: id,
       password: pw,
     });
   }
   public async login(id, pw) {
     try {
-      const value = CustomAxios.post("/signin", {
+      const value = await CustomAxios.post("/auth/signin", {
         email: id,
         password: pw,
       });
+
       console.log(value);
+
+      localStorage.setItem("accessToken", value.data.accessToken);
+      localStorage.setItem("refreshToken", value.data.refreshToken);
+      return true;
     } catch (e) {
       console.log(e);
+      return false;
     }
   }
   public async logout() {}
