@@ -11,6 +11,7 @@ export const Window = ({ state, choose, changeState }) => {
       {state === 1 && <Default choose={choose} changeState={changeState} />}
       {state === 2 && <Buying choose={choose} />}
       {state === 3 && <Paying choose={choose} />}
+      {state === 4 && <Goal choose={choose} />}
     </S.Window>
   );
 };

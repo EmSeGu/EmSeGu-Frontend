@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import StockApi from "../../../api/stock/Stock.api";
+import { PopUp } from "../../Popup";
 import * as Pos from "./possession.style";
 
 const Possession = () => {
@@ -14,21 +15,38 @@ const Possession = () => {
   }, []);
 
   const [goal, setGoal] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+  const [clickedNav, setClickedNav] = useState(true);
+
+  const changeList = (nav: boolean) => {
+    if (nav === false) {
+      setClickedNav((cl) => !cl);
+    }
+  };
 
   return (
     <Pos.Container>
       <Pos.PossesionContainer>
-        {goal ? (
+        {goal && !isClicked ? (
           <>
-            <Pos.Title>수익률 8% 달성 목표까지</Pos.Title>
+            <Pos.Title>수익률 {goal}% 달성 목표까지</Pos.Title>
             <Pos.Flex>
-              <Pos.Target>1.5% | 256일 남았어요!</Pos.Target>
+              <Pos.Target>{goal}% | 256일 남았어요!</Pos.Target>
             </Pos.Flex>
           </>
         ) : (
-          <Pos.Title>
-            일년간의 투자 목표를 세워보세요! 목표 세우러 가기
-          </Pos.Title>
+          <>
+            <Pos.Title onClick={() => setIsClicked(true)}>
+              일년간의 투자 목표를 세워보세요! 목표 세우러 가기
+            </Pos.Title>
+            {isClicked && (
+              <PopUp
+                state={4}
+                choose={setGoal}
+                closePopUp={() => setIsClicked(false)}
+              />
+            )}
+          </>
         )}
       </Pos.PossesionContainer>
       <Pos.PossesionContainer>
