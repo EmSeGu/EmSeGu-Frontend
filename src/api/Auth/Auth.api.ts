@@ -2,7 +2,6 @@ import axios from "axios";
 import CustomAxios from "../../util/CustomAxios";
 
 class Auth {
-  public async login() {}
   public async requestEmail(id) {
     try {
       const value = await CustomAxios.post("/email", {
@@ -22,6 +21,17 @@ class Auth {
       email: id,
       password: pw,
     });
+  }
+  public async login(id, pw) {
+    try {
+      const value = CustomAxios.post("/signin", {
+        email: id,
+        password: pw,
+      });
+      console.log(value);
+    } catch (e) {
+      console.log(e);
+    }
   }
   public async logout() {}
   public async checkLogin() {}
