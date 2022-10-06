@@ -4,6 +4,7 @@ import RegisterForm from "./components/Register";
 import Header from "./components/common/Header";
 import Layout from "./components/Layout/Layout";
 import LoginComponent from "./components/Login";
+import MainPage from "./pages/main/MainPage";
 
 const App = () => {
   return (
@@ -11,7 +12,7 @@ const App = () => {
       <Header />
       <Layout>
         <Routes>
-          <Route index element={<div>Main</div>} />
+          <Route index element={<MainPage />} />
           <Route path="/login" element={<LoginComponent />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="*" element={<div>Not Found</div>} />
