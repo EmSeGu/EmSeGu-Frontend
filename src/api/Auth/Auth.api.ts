@@ -1,10 +1,9 @@
 import axios from "axios";
-import CustomAxios from "../../util/CustomAxios";
 
 class Auth {
   public async requestEmail(id) {
     try {
-      const value = await CustomAxios.post("/email", {
+      const value = await axios.post("http://192.168.183.31:8082/email", {
         email: id,
       });
       alert("이메일로 전송하였습니다.");
@@ -18,8 +17,8 @@ class Auth {
   }
   public async citationEmail(citation, id) {
     try {
-      const { data } = await CustomAxios.head(
-        `/email?email=${id}&authKey=${citation}`
+      const { data } = await axios.head(
+        `http://192.168.183.31:8082/email?email=${id}&authKey=${citation}`
       );
       console.log(data);
     } catch (e) {
@@ -27,19 +26,17 @@ class Auth {
     }
   }
   public async register(id: string, pw: string) {
-    const value = await CustomAxios.post("/auth/signup", {
+    const value = await axios.post("http://192.168.183.31:8082/auth/signup", {
       email: id,
       password: pw,
     });
   }
   public async login(id, pw) {
     try {
-      const value = await CustomAxios.post("/auth/signin", {
+      const value = await axios.post("http://192.168.183.31:8082/auth", {
         email: id,
         password: pw,
       });
-
-      console.log(value);
 
       localStorage.setItem("accessToken", value.data.accessToken);
       localStorage.setItem("refreshToken", value.data.refreshToken);

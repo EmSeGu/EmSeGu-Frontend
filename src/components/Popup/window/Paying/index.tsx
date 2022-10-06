@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import StockApi from "../../../../api/stock/Stock.api";
 import * as S from "../default.style";
 
-export const Buying = ({ choose }) => {
+export const Paying = ({ choose }) => {
   const [count, setCount] = useState<any>(0);
 
-  const addStock = async () => {
-    const value = await StockApi.buyStock(choose.name, Number(count));
+  const minusStock = async () => {
+    const value = await StockApi.saleStock(choose.name, Number(count));
   };
 
   return (
@@ -30,7 +30,7 @@ export const Buying = ({ choose }) => {
           <S.Text>주</S.Text>
         </S.Quantity>
       </S.Select>
-      <S.AddButton onClick={addStock}>추가하기</S.AddButton>
+      <S.AddButton onClick={minusStock}>매도하기</S.AddButton>
     </S.DefaultBox>
   );
 };

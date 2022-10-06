@@ -2,7 +2,7 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 
 const userState = {
-  login: false,
+  login: true,
 };
 
 const UserReducer = (state: any = userState, action: any) => {

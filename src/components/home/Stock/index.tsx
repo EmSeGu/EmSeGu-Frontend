@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import StockApi from "../../../api/stock/Stock.api";
 import { PopUp } from "../../Popup";
+import Loader from "./Loader";
 import * as S from "./stock.style";
+import useList from "./useList";
 
 export const StockInfo = () => {
+  const { isLoaded, itemLists, setTarget } = useList();
   const [clickedNav, setClickedNav] = useState(true);
   const [isClicked, setIsClicked] = useState(false);
+  const [choose, setChoose] = useState(null);
+
+  const [list, setList] = useState<any>(null);
 
   const changeList = (nav: boolean) => {
     if (nav === false) {
@@ -13,13 +19,24 @@ export const StockInfo = () => {
     }
   };
 
+  const getList = async () => {
+    const lists = await StockApi.getStockList(0);
+    setList(lists);
+  };
+
   useEffect(() => {
-    StockApi.getStockList();
+    getList();
   }, []);
 
   return (
     <S.StockLayout>
-      {isClicked && <PopUp state={1} closePopUp={() => setIsClicked(false)} />}
+      {isClicked && (
+        <PopUp
+          state={1}
+          choose={choose}
+          closePopUp={() => setIsClicked(false)}
+        />
+      )}
       <S.NavBox>
         <S.NavItem clicked={clickedNav} onClick={() => changeList(clickedNav)}>
           국내 증시
@@ -47,40 +64,37 @@ export const StockInfo = () => {
             </S.TableFrame>
           </S.TableHead>
           <tbody>
-            <S.TableFrame onClick={() => setIsClicked(true)}>
-              <S.TableItem>
-                <S.Graph>
-                  <svg>
-                    <polyline points="15,40 35,10 55,30"></polyline>
-                  </svg>
-                </S.Graph>
-              </S.TableItem>
-              <S.TableName>삼성전자</S.TableName>
-              <S.TableItem>1.5%</S.TableItem>
-              <S.TableItem>3.4배</S.TableItem>
-              <S.TableItem>5.1배</S.TableItem>
-              <S.TableItem>56,000</S.TableItem>
-              <S.TableItem>56,000</S.TableItem>
-              <S.TableYield state={"positive"}>+ 0.65%</S.TableYield>
-              <S.TableItem>30%</S.TableItem>
-            </S.TableFrame>
-            <S.TableFrame onClick={() => setIsClicked(true)}>
-              <S.TableItem>
-                <S.Graph>
-                  <svg>
-                    <polyline points="15,40 35,10 55,30"></polyline>
-                  </svg>
-                </S.Graph>
-              </S.TableItem>
-              <S.TableName>삼성전자</S.TableName>
-              <S.TableItem>1.5%</S.TableItem>
-              <S.TableItem>3.4배</S.TableItem>
-              <S.TableItem>5.1배</S.TableItem>
-              <S.TableItem>56,000</S.TableItem>
-              <S.TableItem>56,000</S.TableItem>
-              <S.TableYield state={"negative"}>- 0.65%</S.TableYield>
-              <S.TableItem>30%</S.TableItem>
-            </S.TableFrame>
+            {itemLists &&
+              itemLists.map((v) => (
+                <S.TableFrame
+                  onClick={() => {
+                    setIsClicked(true);
+                    setChoose(v);
+                  }}
+                  key={v.id}
+                >
+                  <S.TableItem>
+                    <S.Graph>
+                      <svg>
+                        <polyline points="15,40 35,10 55,30"></polyline>
+                      </svg>
+                    </S.Graph>
+                  </S.TableItem>
+                  <S.TableName>{v.name}</S.TableName>
+                  <S.TableItem>{v.roe}%</S.TableItem>
+                  <S.TableItem>{v.per}배</S.TableItem>
+                  <S.TableItem>{v.pbr}배</S.TableItem>
+                  <S.TableItem>{v.price}</S.TableItem>
+                  <S.TableItem>{v.dividend}</S.TableItem>
+                  <S.TableYield state={v.yield >= 0 ? "positive" : ""}>
+                    {v.yield}%
+                  </S.TableYield>
+                  <S.TableItem>{v.dividendPayout}%</S.TableItem>
+                </S.TableFrame>
+              ))}
+            <Loader.Container setTarget={setTarget}>
+              <Loader isLoaded={isLoaded} />
+            </Loader.Container>
           </tbody>
         </S.Table>
       </div>
