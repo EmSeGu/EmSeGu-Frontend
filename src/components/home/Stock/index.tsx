@@ -1,16 +1,20 @@
 import React, { useState } from "react";
+import { PopUp } from "../../Popup";
 import * as S from "./stock.style";
 
 export const StockInfo = () => {
   const [clickedNav, setClickedNav] = useState(true);
+  const [isClicked, setIsClicked] = useState(false);
 
   const changeList = (nav: boolean) => {
     if (nav === false) {
       setClickedNav((cl) => !cl);
     }
   };
+
   return (
     <S.StockLayout>
+      {isClicked && <PopUp state={1} closePopUp={() => setIsClicked(false)} />}
       <S.NavBox>
         <S.NavItem clicked={clickedNav} onClick={() => changeList(clickedNav)}>
           국내 증시
@@ -38,7 +42,7 @@ export const StockInfo = () => {
             </S.TableFrame>
           </S.TableHead>
           <tbody>
-            <S.TableFrame>
+            <S.TableFrame onClick={() => setIsClicked(true)}>
               <S.TableItem>
                 <S.Graph>
                   <svg>
@@ -55,7 +59,7 @@ export const StockInfo = () => {
               <S.TableYield state={"positive"}>+ 0.65%</S.TableYield>
               <S.TableItem>30%</S.TableItem>
             </S.TableFrame>
-            <S.TableFrame>
+            <S.TableFrame onClick={() => setIsClicked(true)}>
               <S.TableItem>
                 <S.Graph>
                   <svg>
