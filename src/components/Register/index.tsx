@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AuthApi from "../../api/Auth/Auth.api";
 import {
   Input,
   Input2,
@@ -11,27 +12,28 @@ import {
 
 const RegisterForm = () => {
   const [id, setId] = useState<string>();
-  const [name, setName] = useState<string>();
   const [pw, setPw] = useState<string>();
   const [pw2, setPw2] = useState<string>();
 
-  const changeId = (e: any) => {
+  const changeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
   };
 
-  const changeName = (e: any) => {
-    setName(e.target.value);
-  };
-
-  const changePw = (e: any) => {
+  const changePw = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPw(e.target.value);
   };
 
   const requestRegisterf = () => {
     console.log("register");
+    const value = CheckPw();
+    if (!value) {
+      return;
+    }
+
+    AuthApi.register(id, pw);
   };
 
-  const checkPw = (e: any) => {
+  const checkPw = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPw2(e.target.value);
   };
 
@@ -49,7 +51,7 @@ const RegisterForm = () => {
           <Label htmlFor="">이메일</Label>
           <div className="flex">
             <Input type="text" onChange={changeId} />
-            <p>인증</p>
+            <p onClick={() => AuthApi.requestEmail(id)}>인증</p>
           </div>
         </div>
         <div>
@@ -63,10 +65,6 @@ const RegisterForm = () => {
         <div>
           <Label htmlFor="">비밀번호 확인</Label>
           <Input type="password" onChange={checkPw} />
-        </div>
-        <div>
-          <Label htmlFor="">닉네임</Label>
-          <Input type="password" onChange={changeName} />
         </div>
         <Button>회원가입</Button>
       </Form>

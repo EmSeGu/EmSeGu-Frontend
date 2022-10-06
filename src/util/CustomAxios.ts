@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const CustomAxios = axios.create({
-  baseURL: "",
+  baseURL: "http://172.20.10.8:8082/",
   headers: {},
 });
 
